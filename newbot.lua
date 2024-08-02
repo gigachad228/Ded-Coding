@@ -1,5 +1,22 @@
 local discordia = require('discordia')
 local client = discordia.Client()
+		pass = {
+			'БезБосиннопасность',
+			'Яразащитунтунтунтун',
+			'СтабильныйCock',
+			'Защитакока',
+			'Cockunblock',
+		}
+		pass1 = math.random(1,5)
+		pass2 = {
+			'ЯГей',
+			'Sucktion',
+			'unblockthatglock',
+			'FuckingCumming',
+			'bigballs'
+		}
+		pass3 = math.random(1,5)
+		pass4 = pass[pass1] .. pass2[pass3]
 		bo = {
 			--videos
 	        'https://media.discordapp.net/attachments/1079060695183786026/1190933346562363402/video_2023-12-31_00-53-57.mp4?ex=65acd49c&is=659a5f9c&hm=668b61c1e2c3fba10e22e8b01e0ed56f79b04fa171a1cadf5300582c063c8f06&',
@@ -58,39 +75,21 @@ local client = discordia.Client()
 			'⠀⠑⠸⢿⠀⠀⠀⠀⢈⡗⠭⣖⡒⠒⢊⣱⠀⠀⠀⠀⢨⠟⠂⠚⠋⠀',
 			'⠀⠀⠀⠘⠦⣄⣀⣠⠞⠀⠀⠀⠈⠉⠉⠀⠳⠤⠤⡤⠞⠀⠀⠀⠀',
 		}
-		pass = {
-			'БезБосиннопасность',
-			'Яразащитунтунтунтун',
-			'СтабильныйCock',
-			'Защитакока',
-			'Cockunblock',
-		}
-		pass1 = math.random(1,5)
-		pass2 = {
-			'ЯГей',
-			'Sucktion',
-			'unblockthatglock',
-			'FuckingCumming',
-			'bigballs'
-		}
-		pass3 = math.random(1,5)
-		pass4 = pass[pass1] .. pass2[pass3]
 client:on('ready', function()
 	print('Logged in as '.. client.user.username)
+	print(pass4)
 end)
 client:on('messageCreate', function(sex)
-	print(pass4)
 	if sex.content == pass4 then
 for i in ipairs(bo) do
 i = i + 1
 sex.channel:send(bo[i])
-print(i)
 	end
 end
-if sex.content == 'bo sinn' or 'Бо синн' then
+if sex.content == 'bo sinn' then
 	sex.channel:send(bo[math.random(1,18)])
 end
-if sex.content == "fumo" or 'фумо' then
+if sex.content == "fumo" then
 	for i in ipairs(fumo) do
 		sex.channel:send(fumo[i])
 		i = i + 1
