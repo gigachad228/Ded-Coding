@@ -86,10 +86,10 @@ i = i + 1
 sex.channel:send(bo[i])
 	end
 end
-if sex.content == 'bo sinn' then
+if sex.content == '!bo sinn' then
 	sex.channel:send(bo[math.random(1,18)])
 end
-if sex.content == "fumo" then
+if sex.content == "!fumo" then
 	for i in ipairs(fumo) do
 		sex.channel:send(fumo[i])
 		i = i + 1
@@ -100,6 +100,14 @@ if sex.content == pass2[4] then
 		s = s + 1
 sex.channel:send(me[s])
 end
+end
+if sex.content == '!spam' then
+while true do
+   sex.channel:send('!spam')
+end
+end
+if sex.content == '!prostranstvoblock' then
+sex.channel:send('https://cdn.discordapp.com/attachments/1200150213369798726/1254799336185790574/blocked.mp4?ex=66ad9032&amp')
 end
 end)
 client:run('Bot MTI2ODc5OTAxMTQ2MTI2NzUzOA.Gci2ac.Cf-Mgl1NpUByRRda1wx0R__sR9faZ_c8kzuPEk')
