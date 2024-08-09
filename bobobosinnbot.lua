@@ -7,7 +7,7 @@ local client = discordia.Client()
 			'Защитакока',
 			'Cockunblock',
 		}
-		pass1 = math.random(1,5)
+		pass1 = math.random(#pass)
 		pass2 = {
 			'ЯГей',
 			'Sucktion',
@@ -15,7 +15,7 @@ local client = discordia.Client()
 			'FuckingCumming',
 			'bigballs'
 		}
-		pass3 = math.random(1,5)
+		pass3 = math.random(#pass2)
 		pass4 = pass[pass1] .. pass2[pass3]
 		bo = {
 			--videos
@@ -28,6 +28,7 @@ local client = discordia.Client()
             'https://cdn.discordapp.com/attachments/1200150213369798726/1266435021737033748/73c7a036.mp4?ex=66adb4c6&is=66ac6346&hm=4ac20261350fe1e977efe25e81991f8d4963eb5a5b55ba9fb060361f1d45895c&',
             'https://cdn.discordapp.com/attachments/1200150213369798726/1260288230520000694/bo_sinn_nearly_blocked.mp4?ex=66adc1a1&is=66ac7021&hm=4d16d5032599001fcffabca157c79b9f1f846a67e94a8da928844b344916f202&',
             'https://cdn.discordapp.com/attachments/1035647221024161905/1261083103355469916/bo_sinn_blocked_comp.mp4?ex=66ae02e9&is=66acb169&hm=9a5c867c9a83a7b3cc15334e1ddc05a6ec36913a5659c2c8cd891c985bd04eec&',
+            'https://cdn.discordapp.com/attachments/1200150213369798726/1269373040865841162/video_2024-08-02_06-28-17.mp4?ex=66b124c4&is=66afd344&hm=526fce30755b284f9ce651c77ae2cc085a760ce6b5d9201222782b1452df0abc&',
             --gifs
             'https://tenor.com/view/bo-sinn-gif-11098444432472051034',
             'https://tenor.com/view/whitelonia-yarra-money-gif-1576953760545295302',
@@ -35,10 +36,12 @@ local client = discordia.Client()
             'https://cdn.discordapp.com/attachments/1035647221024161905/1265015993378406555/bo_sinn_obiyasnyaet.gif',
             'https://cdn.discordapp.com/attachments/1035647221024161905/1265293120161976390/bo_sinn_tantsuet.gif',
             'https://cdn.discordapp.com/attachments/1200150213369798726/1266434272991121459/bosinnkachaetsya.gif',
+            'https://cdn.discordapp.com/attachments/1200150213369798726/1269813823687102565/bo-sinn-onepiececock.gif?ex=66b16dc7&is=66b01c47&hm=6273ad57e2c744d3b10185d2bc7be6990d28f6978d02f3c68dfed66fca43444f&',
             --images
             'https://media.discordapp.net/attachments/1035647221024161905/1261629823684575253/cibDsFJbmuY.jpg?ex=66ae05d5&is=66acb455&hm=23dba3a7dd741edd33963b47b1c58d89873949c77add2cedac25b3e0f3ff50b0&=&format=webp&width=793&height=702',
             'https://media.discordapp.net/attachments/1096764785426698353/1265016760231264439/image.png?ex=66ad292a&is=66abd7aa&hm=47473814fc729f6226c6e3d2a89bed885c6e259cfdd1654eeebe8d5a637c4773&=&format=webp&quality=lossless&width=10000&height=10000',
             'https://media.discordapp.net/attachments/1096764785426698353/1260286748127133879/image.png?ex=66adc03f&is=66ac6ebf&hm=c5a007050b7e138385bd32935648adc3243c49fc9de7907584a2f0b507d99f2f&=&format=webp&quality=lossless&width=1255&height=645',
+            'https://media.discordapp.net/attachments/1200150213369798726/1269813485739442329/wwIjGQYu9Ac.jpg?ex=66b16d76&is=66b01bf6&hm=16873fa77a240266d5e8762579ffa22543f88709e83791897623475be8fc118e&=&format=webp&width=1214&height=702',
 		}
 		me = {
 			            --me
@@ -82,12 +85,12 @@ end)
 client:on('messageCreate', function(sex)
 	if sex.content == pass4 then
 for i in ipairs(bo) do
-i = i + 1
 sex.channel:send(bo[i])
+i = i + 1
 	end
 end
 if sex.content == '!bo sinn' then
-	sex.channel:send(bo[math.random(1,18)])
+	sex.channel:send(bo[math.random(#bo)])
 end
 if sex.content == "!fumo" then
 	for i in ipairs(fumo) do
@@ -97,14 +100,12 @@ if sex.content == "!fumo" then
 end
 if sex.content == pass2[4] then
 	for s in ipairs(me) do
-		s = s + 1
 sex.channel:send(me[s])
+		s = s + 1
 end
 end
 if sex.content == '!spam' then
-while true do
    sex.channel:send('!spam')
-end
 end
 if sex.content == '!prostranstvoblock' then
 sex.channel:send('https://cdn.discordapp.com/attachments/1200150213369798726/1254799336185790574/blocked.mp4?ex=66ad9032&amp')
