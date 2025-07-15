@@ -1,4 +1,5 @@
-local mouse = [[                                                                                                    
+local mouse = [[
+
                         ##########                                  ##########                      
                     ################      ######    ####          ################                  
                   ####################::::::::::::::##::::      ####################                
@@ -51,17 +52,17 @@ local mouse = [[
                     ####  ############################################  ####                        
                       ####  ########################################  ####                          
                       ######  ##################################  ######                            
-                        ##########  @@######################    ####                                
-                            ##########  ++####          ##########                                  
+                        ##########    ######################    ####                                
+                            ##########                  ##########                                  
                                   ############################                                      
-                                            ############                                            
-                                                      ##                                            
-                                                      ##                                            
-                                                      ##                                            
-                                  MM    ##            ##    ##                                      
-                                  ##    @@          ####                                            
-                                  ##########      ############                                      
-                                  ##########      ############                                     ]]
+                                    ######################                                          
+                                    ###               ###                                           
+                                    ###               ###                                           
+                                    ###               ###                                           
+                                  ########          ########                                      
+                                ####    ##        ####    ##                                      
+                              ############      ############                                      
+                              ############      ############                                      ]]
 local rand = require("ownlibs.rand")
 local socket = require("socket")
 -- разбиение этой МЫШКИ в строки
@@ -77,13 +78,12 @@ function funky()
     os.execute("sleep " ..random_range)
   end
 end
--- Пример: ASCII-график функции sin(x)
 local color = "\27[31m"
 local reset = "\27[0m"
 function sinstart()
 for x = 0, 3, 0.1 do
     local y = math.sin(x) * 50 + 100
-    print("##"..string.rep("/", y)..color..string.rep([[/\]], 3)..reset..string.rep([[\]], 201-y).."###".."\n")
+    print(string.rep("/", y)..color..string.rep([[/\]], 3)..reset..string.rep([[\]], 201-y).."\n")
     end
 end
 function rice()
@@ -96,10 +96,9 @@ local time = io.read("*n")*0.01
 while x > 0 do
     local y = math.sin(x) * 50 + 100
     x = x + 0.1
-    -- Неблокирующая задержка (можно прервать Ctrl+C)
     while socket.gettime() - start_time < time do end
     start_time = socket.gettime()
-    io.write("###"..string.rep("/", y)..color..string.rep([[/\]], length)..reset..string.rep([[\]],201-y-length).."###".."\n")
+    io.write(string.rep("/", y)..color..string.rep([[/\]], length)..reset..string.rep([[\]],213-y-length*2).."\n")
 end
 end
 function sex()
@@ -112,9 +111,9 @@ print([[1. math.SIN()
 2. rice()]])
 local func = io.read("*n")
 if func == 1 then
-start.sinstart()
+sinstart()
 elseif func == 2 then
-start.rice()
+rice()
 elseif func > 2 then
-start.sex()
+sex()
 end

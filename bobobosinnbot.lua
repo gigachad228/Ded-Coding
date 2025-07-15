@@ -53,7 +53,7 @@ local client = discordia.Client()
             'https://cdn.discordapp.com/attachments/1200150213369798726/1253828524108943413/20240620_210351.mp4?ex=66adfc8f&is=66acab0f&hm=763693456810d10bd40d5513fae26c0c64daa5ec41cfc2c9f898d177e234492e&',
 		}
 		fumo = {
-			'⠀  ⣠⠤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀    ⠀⠀⣀⣀⠀⠀',
+			'   ⣠⠤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀    ⠀⠀⣀⣀⠀⠀',
 			'⠀⠀⡜⠁⠀⠈⢢⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⠋⠷⠶⠱⡄',
 			'⠀⢸⣸⣿⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠫⢀⣖⡃⢀⣸⢹',
 			'⠀⡇⣿⣿⣶⣤⡀⠀⠀⠙⢆⠀⠀⠀⠀⠀⣠⡪⢀⣤⣾⣿⣿⣿⣿⣸',
@@ -76,7 +76,7 @@ local client = discordia.Client()
 			'⢰⠋⠈⠉⠘⠋⠁⠀⠀⠈⠙⠳⢄⣀⡴⠉⠀⠀⠀⠀⠙⠂⠀⠀⢀⡇',
 			'⢸⡠⡀⠀⠒⠂⠐⠢⠀⣀⠀⠀⠀⠀⠀⢀⠤⠚⠀⠀⢸⣔⢄⠀⢾⠀',
 			'⠀⠑⠸⢿⠀⠀⠀⠀⢈⡗⠭⣖⡒⠒⢊⣱⠀⠀⠀⠀⢨⠟⠂⠚⠋⠀',
-			'⠀⠀⠀⠘⠦⣄⣀⣠⠞⠀⠀⠀⠈⠉⠉⠀⠳⠤⠤⡤⠞⠀⠀⠀⠀',
+			'⠀⠀⠀⠘⠦⣄⣀⣠⠞⠀⠀⠀⠈⠉⠉⠀⠳⠤⠤⡤⠞⠀⠀⠀⠀ ',
 		}
 client:on('ready', function()
 	print('Logged in as '.. client.user.username)
@@ -100,7 +100,7 @@ if sex.content == "!fumo" then
 end
 if sex.content == pass2[4] then
 	for s in ipairs(me) do
-sex.channel:send(me[s])
+		sex.channel:send(me[s])
 		s = s + 1
 end
 end
