@@ -67,13 +67,12 @@ local rand = require("ownlibs.rand")
 local socket = require("socket")
 -- разбиение этой МЫШКИ в строки
 local funkymouse = {}
-local funkymousereverse = {}
 function funky()
   for line in mouse:gmatch("[^\r\n]+") do
     table.insert(funkymouse,  line)
   end
   for stringn in ipairs(funkymouse) do
-    print(funkymouse[stringn].."  " .. string.reverse(funkymouse[stringn]))
+    print(funkymouse[stringn]..string.reverse(funkymouse[stringn]))
     local random_range = rand.random_range(1,10) * 0.1
     os.execute("sleep " ..random_range)
   end
@@ -82,23 +81,29 @@ local color = "\27[31m"
 local reset = "\27[0m"
 function sinstart()
 for x = 0, 3, 0.1 do
-    local y = math.sin(x) * 50 + 100
-    print(string.rep("/", y)..color..string.rep([[/\]], 3)..reset..string.rep([[\]], 201-y).."\n")
+    local y = math.sin(x) * 50 + 100 - 6
+    io.write(string.rep("/", y)..color..string.rep([[/\]], 3)..reset..string.rep([[\]], 213-y-6).."\n")
     end
 end
 function rice()
 local x = 1
 local start_time = socket.gettime()
+while true do
 io.write("write the length of the wave: ")
-local length = io.read("*n")
+local length = tonumber(io.read("*l"))
 io.write("write the frequency of the wave: ")
-local time = io.read("*n")*0.01
+local time = tonumber(io.read("*l"))
+if length == nil or time == nil then
+  io.write("write a number, dumbass".."\n")
+else
 while x > 0 do
-    local y = math.sin(x) * 50 + 100
+    local y = math.sin(x) * 50 + 100 - length
     x = x + 0.1
-    while socket.gettime() - start_time < time do end
+    while socket.gettime() - start_time < time*0.01 do end
     start_time = socket.gettime()
     io.write(string.rep("/", y)..color..string.rep([[/\]], length)..reset..string.rep([[\]],213-y-length*2).."\n")
+end
+end
 end
 end
 function sex()
@@ -107,13 +112,21 @@ function sex()
          print('cute + funny = cunny')
          funky()
 end
-print([[1. math.SIN()
-2. rice()]])
-local func = io.read("*n")
-if func == 1 then
-sinstart()
-elseif func == 2 then
-rice()
-elseif func > 2 then
-sex()
+function read()
+  print([[1. math.SIN()
+  2. rice()]])
+  while true do
+    local func = tonumber(io.read("*l"))
+    if func == nil then
+      io.write("write a number, dumbass".."\n")
+    elseif func == 1 then
+      sinstart()
+      break
+    elseif func == 2 then
+      rice()
+    elseif func > 2 then
+      sex()
+    end
+  end
 end
+read()
