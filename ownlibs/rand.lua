@@ -1,6 +1,6 @@
 local rand = {}
 local ffi = require("ffi")
-ffi.cdef[[
+ffi.cdef [[
     int open(const char *pathname, int flags);
     ssize_t read(int fd, void *buf, size_t count);
     int close(int fd);
@@ -17,4 +17,5 @@ function rand.random_range(min, max)
     local normalized = num / 4294967296.0
     return min + math.floor(normalized * (max - min + 1))
 end
+
 return rand
