@@ -1,10 +1,14 @@
 function writingtest(filename)
     local file = io.open(filename, "w+")
-    for i = 1, 10000000 do
-        file:write(i .. " ")
-        i = i + 1
+    if file == nil then
+        print("fuck you")
+    else
+        for i = 1, 10000000 do
+            file:write(i .. " ")
+            i = i + 1
+        end
+        file:close()
     end
-    file:close()
 end
 
 function speedtest()
