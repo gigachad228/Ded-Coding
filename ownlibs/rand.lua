@@ -17,5 +17,5 @@ function rand.random_range(min, max)
     local normalized = num / 4294967296.0
     return min + math.floor(normalized * (max - min + 1))
 end
-
+--CAN ONLY BE USED WITH LUAJIT!!!!
 return rand

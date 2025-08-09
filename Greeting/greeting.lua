@@ -169,7 +169,7 @@ function Rice()
     if length == nil or time == nil then
       io.write(color .. "write a number, dumbass" .. reset .. "\n")
     else
-      while x > 0 do
+      while true do
         local y = math.sin(x) * 50 + 100 - length
         x = x + 0.1
         while socket.gettime() - start_time < time * 0.01 do end
