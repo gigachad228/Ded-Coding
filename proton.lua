@@ -51,7 +51,7 @@ parser:argument("game", "the game itself")
 local args = parser:parse()
 
 if args.wayland == true then
-    string(tab, "PROTON_ENABLE_WAYLAND=1 ")
+    table.insert(tab, "PROTON_ENABLE_WAYLAND=1 ")
     print("PROTON_ENABLE_WAYLAND=1 ")
 end
 
