@@ -1,9 +1,11 @@
 my LUA projects
-for proton.lua you need to make a config file $HOME/.config/dedproton/default.cfg
-first line is for values "y" and "n" and they correspond to defaulting proton, set it to "n" if you don't want your proton to be chosed automatically by yourself
-second line is a number for proton, 1 for proton-cachyos and 2 for proton-GE-custom
-the config file should look like this:
+for proton.lua you need to execute protonfind.sh file
+it makes a directory $HOME/.config/dedproton/
+it also finds every proton in your system and puts it into "protons" file, where it found every proton. It also makes a "default.cfg", a file that should look like this:
 ```
-y
-2
+n
+1
 ```
+it is by default turned off, the first line is for "n" or "y" values and it defines if your proton autochooses by the next value, a number. A number is a line in the "protons" file that you can freely write and choose.
+!!WARNING!!
+Every time you execute protonfind, it rewrites the "protons" and "default.cfg" with find output and "n" "1"

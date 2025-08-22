@@ -1,47 +1,35 @@
 #!/usr/bin/env luajit
-local user = os.getenv("USER")
-::file::
-local configfileread = io.open("/home/" .. user .. "/.config/dedproton/default.cfg", "r")
-if configfileread == nil then
-    os.execute("mkdir /home/" .. user .. "/.config/dedproton")
-    goto file
+local home = os.getenv("HOME")
+local configfileread = io.open(home.."/.config/dedproton/default.cfg", "r")
+local lines = {}
+for line in configfileread:lines() do
+    table.insert(lines,line)
 end
+local defaultval = lines[1]
+local protonval = lines[2]
 
-local function lineread(linenum)
-    local cur = 1
-    for line in configfileread:lines() do
-        if cur == linenum then
-            return line
-        end
-        cur = cur + 1
-    end
-    configfileread:close()
+local function protonfind()
+	local protons = io.open(home.."/.config/dedproton/protons", "r")
+	local amount = 0
+	local protonstwo = {}
+	for eachproton in protons:lines() do
+		amount=amount+1
+		table.insert(protonstwo,eachproton)
+		print(amount..": "..eachproton)
+	end
+	io.write("your choice:")
+	if defaultval == "y" then
+		io.write(protonval.."\n")
+		return protonstwo[tonumber(protonval)]
+	else
+		local optionchoose = tonumber(io.read())
+		return protonstwo[optionchoose]
+	end
 end
 
 local argparse = require("argparse")
 local parser = argparse("DED-proton", "DED-proton")
-local tab = { ' STEAM_COMPAT_CLIENT_INSTALL_PATH="/home/' ..
-user ..
-'/.local/share/Steam" STEAM_COMPAT_DATA_PATH="/home/' ..
-user .. '/.local/share/proton-pfx/0" MANGOHUD=1 PROTON_NO_WM_DECORATION=1 UMU_NO_RUNTIME=1 PROTON_PREFER_SDL_INPUT=1 ' }
-local default = lineread(1)
-local read = lineread(1)
-local function protonchoose()
-    if default == "y" then
-        if tonumber(read) == 1 then
-            return "/usr/share/steam/compatibilitytools.d/proton-cachyos/proton"
-        elseif tonumber(read) == 2 then
-            return "/usr/share/steam/compatibilitytools.d/proton-ge-custom/proton"
-        end
-    else
-        local read = tonumber(io.read())
-        if read == 1 then
-            return "/usr/share/steam/compatibilitytools.d/proton-cachyos/proton"
-        elseif read == 2 then
-            return "/usr/share/steam/compatibilitytools.d/proton-ge-custom/proton"
-        end
-    end
-end
+local tab = {' STEAM_COMPAT_CLIENT_INSTALL_PATH="'..home..'/.local/share/Steam" STEAM_COMPAT_DATA_PATH="'..home..'/.local/share/proton-pfx/0" MANGOHUD=1 PROTON_NO_WM_DECORATION=1 UMU_NO_RUNTIME=1 PROTON_PREFER_SDL_INPUT=1 '}
 
 parser:flag "-W --wayland"
 parser:flag "-B --vkbasalt"
@@ -64,19 +52,11 @@ if args.xim == true then
     table.insert(tab, "PROTON_NO_XIM=0 ")
     print("PROTON_NO_XIM=0 ")
 end
-local proton
-if default == "y" then
-   print([[choose a proton version:
-    1: proton-cachyos
-    2: proton-ge-custom]])
-    print(read)
-else
-    print([[choose a proton version:
-    1: proton-cachyos
-    2: proton-ge-custom]])
-end
 
-proton = protonchoose()
+local proton
+
+proton = protonfind()
+configfileread:close()
 
 if args.quiet == true then
     os.execute(table.concat(tab) .. 'gamemoderun ' .. proton .. ' run "' .. args.game ..
@@ -84,3 +64,5 @@ if args.quiet == true then
 else
     os.execute(table.concat(tab) .. 'gamemoderun ' .. proton .. ' run "' .. args.game .. '"')
 end
+
+
