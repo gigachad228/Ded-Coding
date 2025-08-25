@@ -27,6 +27,9 @@ local function protonfind()
 	end
 end
 
+local proton = protonfind()
+configfileread:close()
+
 local argparse = require("argparse")
 local parser = argparse("DED-proton", "DED-proton")
 local tab = {' STEAM_COMPAT_CLIENT_INSTALL_PATH="'..home..'/.local/share/Steam" STEAM_COMPAT_DATA_PATH="'..home..'/.local/share/proton-pfx/0" MANGOHUD=1 PROTON_NO_WM_DECORATION=1 UMU_NO_RUNTIME=1 PROTON_PREFER_SDL_INPUT=1 '}
@@ -53,16 +56,8 @@ if args.xim == true then
     print("PROTON_NO_XIM=0 ")
 end
 
-local proton
-
-proton = protonfind()
-configfileread:close()
-
 if args.quiet == true then
-    os.execute(table.concat(tab) .. 'gamemoderun ' .. proton .. ' run "' .. args.game ..
-        '" >/tmp/proton-cachyos.log 2>&1')
+    os.execute(table.concat(tab)..'gamemoderun '..proton..' run "'..args.game..'" >/tmp/proton-cachyos.log 2>&1')
 else
-    os.execute(table.concat(tab) .. 'gamemoderun ' .. proton .. ' run "' .. args.game .. '"')
+    os.execute(table.concat(tab)..'gamemoderun '..proton..' run "'..args.game..'"')
 end
-
-
