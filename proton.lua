@@ -1,17 +1,12 @@
 #!/usr/bin/env luajit
-
--- STEP 1 - DEFINING!!!
 local home = os.getenv("HOME")
-package.path = home.."/.config/dedproton/?.lua"
-local fileread = io.open(home.."/.config/dedproton/default.cfg", "r")
-local values = {}
-for line in fileread:lines() do
-    table.insert(values,line)
+local configfileread = io.open(home.."/.config/dedproton/default.cfg", "r")
+local lines = {}
+for line in configfileread:lines() do
+    table.insert(lines,line)
 end
-fileread:close()
-local defaultval = values[1]
-local protonval = values[2]
-local tab = {'STEAM_COMPAT_CLIENT_INSTALL_PATH="'..home..'/.local/share/Steam"', 'STEAM_COMPAT_DATA_PATH="'..home..'/.local/share/proton-pfx/0"'}
+local defaultval = lines[1]
+local protonval = lines[2]
 
 local function protonfind()
 	local protons = io.open(home.."/.config/dedproton/protons", "r")
@@ -22,7 +17,6 @@ local function protonfind()
 		table.insert(protonstwo,eachproton)
 		print(amount..": "..eachproton)
 	end
-	protons:close()
 	io.write("your choice:")
 	if defaultval == "y" then
 		io.write(protonval.."\n")
@@ -33,18 +27,15 @@ local function protonfind()
 	end
 end
 
-local proton = protonfind()
-
--- STEP 2 - ARGUMENTING!!!
 local argparse = require("argparse")
 local parser = argparse("DED-proton", "DED-proton")
+local tab = {' STEAM_COMPAT_CLIENT_INSTALL_PATH="'..home..'/.local/share/Steam" STEAM_COMPAT_DATA_PATH="'..home..'/.local/share/proton-pfx/0" MANGOHUD=1 PROTON_NO_WM_DECORATION=1 UMU_NO_RUNTIME=1 PROTON_PREFER_SDL_INPUT=1 '}
 
 parser:flag "-W --wayland"
 parser:flag "-B --vkbasalt"
 parser:flag "-q --quiet"
 parser:flag "-x --xim"
 parser:argument("game", "the game itself")
-
 local args = parser:parse()
 
 if args.wayland == true then
@@ -62,15 +53,16 @@ if args.xim == true then
     print("PROTON_NO_XIM=0 ")
 end
 
-fileread = io.open(home.."/.config/dedproton/env", "r")
-for line in fileread:lines() do
-	table.insert(tab,line)
-end
-fileread:close()
+local proton
 
--- STEP 3 - LAUNCHING!!!
+proton = protonfind()
+configfileread:close()
+
 if args.quiet == true then
-    os.execute(table.concat(tab, " ").." "..proton..' run "'..args.game..'" >/tmp/dedproton.log 2>&1')
+    os.execute(table.concat(tab) .. 'gamemoderun ' .. proton .. ' run "' .. args.game ..
+        '" >/tmp/proton-cachyos.log 2>&1')
 else
-    os.execute(table.concat(tab, " ").." "..proton..' run "'..args.game..'"')
+    os.execute(table.concat(tab) .. 'gamemoderun ' .. proton .. ' run "' .. args.game .. '"')
 end
+
+
