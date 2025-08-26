@@ -2,9 +2,9 @@ My LUA projects
 
 For proton.lua you need to execute forproton.sh file and have gamemoderun installed
 
-Also it makes a directory $HOME/.config/dedproton/
+Also it makes directories $HOME/.config/dedproton/ and $HOME/.local/share/dedproton (the last one is for dependencies)
 
-It also finds every proton in your system and puts it into "protons" file, where it found every proton. It also makes a "default.cfg", a file that should look like this:
+It also finds every proton in your system and puts it into $HOME/.config/protons file, where it found every proton. It also makes a $HOME/.config/dedproton/default.cfg, a file that should look like this:
 
 ```
 n
@@ -13,7 +13,7 @@ n
 
 It is by default turned off, the first line is for "n" or "y" values and it defines if your proton autochooses by the next value, a number. A number is a line in the "protons" file that you can freely write and choose.
 
-The third file is "env", it has YOUR environment variables, you can add to or remove the default ones the forproton.sh, here are they btw:
+The third file is $HOME/.config/dedproton/env, it has YOUR environment variables, you can add to or remove the default ones the forproton.sh, here are they btw:
 
 ```
 MANGOHUD=1

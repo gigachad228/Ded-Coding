@@ -2,7 +2,7 @@
 
 -- STEP 1 - DEFINING!!!
 local home = os.getenv("HOME")
-package.path = home.."/.config/dedproton/?.lua"
+package.path = home.."/.local/share/dedproton/?.lua"
 local fileread = io.open(home.."/.config/dedproton/default.cfg", "r")
 local values = {}
 for line in fileread:lines() do
