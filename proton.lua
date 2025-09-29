@@ -1,6 +1,7 @@
 #!/usr/bin/env luajit
 
 -- STEP 1 - DEFINING!!!
+local os = require("os")
 local home = os.getenv("HOME")
 package.path = home.."/.local/share/dedproton/?.lua"
 local fileread = io.open(home.."/.config/dedproton/default.cfg", "r")

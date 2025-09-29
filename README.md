@@ -1,4 +1,6 @@
-My LUA projects
+My LUA(jit) stuff
+
+I mostly use luajit version of the lua because its faster, but i don't usually use ffi, so its good.
 
 For proton.lua you need to execute forproton.sh file and have gamemoderun installed
 
