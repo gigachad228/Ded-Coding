@@ -12,10 +12,15 @@ end
 fileread:close()
 local defaultval = values[1]
 local protonval = values[2]
-local tab = {'STEAM_COMPAT_CLIENT_INSTALL_PATH="'..home..'/.local/share/Steam"', 'STEAM_COMPAT_DATA_PATH="'..home..'/.local/share/proton-pfx/0"'}
+local tab = {'STEAM_COMPAT_CLIENT_INSTALL_PATH="'..home..'/.local/share/Steam"'}
 
 local function protonfind()
-	local protons = io.open(home.."/.config/dedproton/protons", "r")
+	local color = "\27[31m"
+	local reset = "\27[0m"
+	local protons = io.open(home.."/.local/share/dedproton/protons", "r")
+	if protons == nil then
+		error(color..home..'/.local/share/dedproton/protons NOT FOUND, ABORTING!!! PLEASE LAUNCH "forproton.sh"'..reset)
+	end
 	local amount = 0
 	local protonstwo = {}
 	for eachproton in protons:lines() do
@@ -25,11 +30,15 @@ local function protonfind()
 	end
 	protons:close()
 	io.write("your choice:")
+	local choice = io.read()
+	if tonumber(choice) > amount then
+		error(color.."NO SUCH CHOICE!!!"..reset)
+	end
 	if defaultval == "y" then
 		io.write(protonval.."\n")
 		return protonstwo[tonumber(protonval)]
 	else
-		local optionchoose = tonumber(io.read())
+		local optionchoose = tonumber(choice)
 		return protonstwo[optionchoose]
 	end
 end
