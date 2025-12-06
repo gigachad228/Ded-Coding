@@ -9,7 +9,7 @@ ffi.cdef [[
 function rand.random_range(min, max)
     local fd = ffi.C.open("/dev/urandom", 0)
     if fd == -1 then
-        error("Не удалось открыть /dev/urandom")
+        error("Couldn't open /dev/urandom")
     end
     local buf = ffi.new("uint32_t[1]")
     ffi.C.read(fd, buf, 4)

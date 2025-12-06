@@ -3,8 +3,8 @@
 -- STEP 1 - DEFINING!!!
 local os = require("os")
 local home = os.getenv("HOME")
-package.path = home.."/.local/share/dedproton/?.lua"
-local fileread = io.open(home.."/.config/dedproton/default.cfg", "r")
+package.path = home.."/.local/share/dedlua/?.lua"
+local fileread = io.open(home.."/.config/dedlua/default.cfg", "r")
 local values = {}
 for line in fileread:lines() do
     table.insert(values,line)
@@ -17,9 +17,9 @@ local tab = {'STEAM_COMPAT_CLIENT_INSTALL_PATH="'..home..'/.local/share/Steam"'}
 local function protonfind()
 	local color = "\27[31m"
 	local reset = "\27[0m"
-	local protons = io.open(home.."/.local/share/dedproton/protons", "r")
+	local protons = io.open(home.."/.local/share/dedlua/protons", "r")
 	if protons == nil then
-		error(color..home..'/.local/share/dedproton/protons NOT FOUND, ABORTING!!! PLEASE LAUNCH "forproton.sh"'..reset)
+		error(color..home..'/.local/share/dedlua/protons NOT FOUND, ABORTING!!! PLEASE LAUNCH "forproton.sh"'..reset)
 	end
 	local amount = 0
 	local protonstwo = {}
@@ -72,7 +72,7 @@ if args.xim == true then
     print("PROTON_NO_XIM=0 ")
 end
 
-fileread = io.open(home.."/.config/dedproton/env", "r")
+fileread = io.open(home.."/.config/dedlua/env", "r")
 for line in fileread:lines() do
 	table.insert(tab,line)
 end
@@ -80,7 +80,7 @@ fileread:close()
 
 -- STEP 3 - LAUNCHING!!!
 if args.quiet == true then
-    os.execute(table.concat(tab, " ").." "..proton..' run "'..args.game..'" >/tmp/dedproton.log 2>&1')
+    os.execute(table.concat(tab, " ").." "..proton..' run "'..args.game..'" >/tmp/dedlua.log 2>&1')
 else
-    os.execute(table.concat(tab, " ").." "..proton..' run "'..args.game..'"')
+    os.execute(table.concat(tab, " ").." "..'"'..proton..'"'..' run "'..args.game..'"')
 end
