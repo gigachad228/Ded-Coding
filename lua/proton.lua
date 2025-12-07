@@ -72,12 +72,16 @@ if args.xim == true then
     print("PROTON_NO_XIM=0 ")
 end
 
-fileread = io.open(home.."/.config/dedlua/env", "r")
+fileread = io.open(home.."/.config/dedlua/env", "r") -- INSERTING ENV FROM FILE
 for line in fileread:lines() do
 	table.insert(tab,line)
 end
 fileread:close()
-
+fileread = io.open(home.."/.config/dedlua/pfx", "r") -- INSERTING PFX FROM FILE
+for line in fileread:lines() do
+	table.insert(tab,line)
+end
+fileread:close()
 -- STEP 3 - LAUNCHING!!!
 if args.quiet == true then
     os.execute(table.concat(tab, " ").." "..proton..' run "'..args.game..'" >/tmp/dedlua.log 2>&1')
