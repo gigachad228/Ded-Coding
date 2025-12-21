@@ -8,10 +8,7 @@ echo "making $config/default.cfg"
 echo "n
 1" > $config/default.cfg
 echo "making $config/env"
-echo "MANGOHUD=1
-PROTON_NO_WM_DECORATION=1
-UMU_NO_RUNTIME=1
-PROTON_PREFER_SDL_INPUT=1" > $config/env
+echo "MANGOHUD=1" > $config/env
 echo "STEAM_COMPAT_DATA_PATH=~/.local/share/dedlua/pfx" > $config/pfx
 pfxfile="$(cat $config/pfx)"
 echo "copying from ownlibs to $lib"
