@@ -1,5 +1,6 @@
 local rand = require("./ownlibs/rand")
-local file = io.open("luatest.txt","w+")
+local filelocation = "/tmp/luatest.txt"
+local file = io.open(filelocation,"w+")
 local amount = 15000000
 function writingtest()
     for i = 1, amount, 1 do
@@ -22,17 +23,15 @@ function speedtesttest()
     print(table.concat(_table))
 end
 
-function randseq()
-local fucker = {'a','b','c','d','e','f','g','h','s','k','l','p','o','i','u','y','t','r','w','q','j','z','x','v','n','m','1','2','3','4','5','6','7','8','9','0'}
-for i=1,amount,1 do
-    file:write(fucker[rand.random_range(1,#fucker)])
-end
+function randseq(x)
+    local fucker={}
+    for i=33,126 do table.insert(fucker,string.char(i)) end
+    for i=1,x,1 do
+        file:write(fucker[rand.random_range(1, #fucker)])
+    end
 end
 
-io.write([[1 writingtest() -- ]]..amount..[[ numbers written into test.md
-2 speedtest() -- ]]..amount..[[ numbers printed out
-3 randseq() -- ]]..amount..[[ random characters written into test.md
-Your choice: ]])
+io.write('1 writingtest() -- '..amount..'numbers written into '..filelocation.."\n"..'2 speedtest() -- '..amount..' numbers printed out'.."\n"..'3 randseq() -- '..amount..' random characters written into '..filelocation.."\n"..'Your choice:')
 
 while true do
     local read = tonumber(io.read("*l"))
@@ -44,12 +43,13 @@ while true do
             speedtest()
             break
         elseif read == 3 then
-            randseq(amount)
+	    randseq(amount)
             break
         elseif read == 4 then
             speedtesttest()
             break
         end
+	file:close()
     else
         print("write a number stupid")
     end

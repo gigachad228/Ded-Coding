@@ -1,6 +1,7 @@
 #!/usr/bin/env luajit
 
 -- STEP 1 - DEFINING!!!
+local version = "0.4.0"
 local os = require("os")
 local home = os.getenv("HOME")
 package.path = home.."/.local/share/dedlua/?.lua"
@@ -12,7 +13,7 @@ end
 fileread:close()
 local defaultval = values[1]
 local protonval = values[2]
-local tab = {'STEAM_COMPAT_CLIENT_INSTALL_PATH="'..home..'/.local/share/Steam"'}
+local tab = {}
 
 local function protonfind()
 	local color = "\27[31m"
@@ -43,34 +44,37 @@ local function protonfind()
 	end
 end
 
-local proton = protonfind()
-
 -- STEP 2 - ARGUMENTING!!!
 local argparse = require("argparse")
 local parser = argparse("DED-proton", "DED-proton")
 
-parser:flag "-W --wayland"
-parser:flag "-B --vkbasalt"
-parser:flag "-q --quiet"
-parser:flag "-x --xim"
+parser:flag "-W --wayland":description("set PROTON_ENABLE_WAYLAND to 1")
+parser:flag "-B --vkbasalt":description("set ENABLE_VKBASALT to 1")
+parser:flag "-q --quiet":description("don't output anything from proton and end variables")
+parser:flag "-x --xim":description("set PROTON_NO_XIM to 0")
+parser:flag "-v --version":description("print the version and exit the wrapper")
 parser:argument("game", "the game itself")
 
 local args = parser:parse()
 
+if args.version == true then
+	print("wrapper's version: "..version)
+	os.exit()
+end
+
 if args.wayland == true then
     table.insert(tab, "PROTON_ENABLE_WAYLAND=1 ")
-    print("PROTON_ENABLE_WAYLAND=1 ")
 end
 
 if args.vkbasalt == true then
     table.insert(tab, "ENABLE_VKBASALT=1 ")
-    print("ENABLE_VKBASALT=1 ")
 end
 
 if args.xim == true then
     table.insert(tab, "PROTON_NO_XIM=0 ")
-    print("PROTON_NO_XIM=0 ")
 end
+
+local proton = protonfind()
 
 fileread = io.open(home.."/.config/dedlua/env", "r") -- INSERTING ENV FROM FILE
 for line in fileread:lines() do
@@ -84,7 +88,8 @@ end
 fileread:close()
 -- STEP 3 - LAUNCHING!!!
 if args.quiet == true then
-    os.execute(table.concat(tab, " ").." "..proton..' run "'..args.game..'" >/tmp/dedlua.log 2>&1')
+    os.execute(table.concat(tab, " ").." "..'"'..proton..'"'..' run "'..args.game..'" >/tmp/dedlua.log 2>&1')
 else
+	print(table.concat(tab, "\n"))
     os.execute(table.concat(tab, " ").." "..'"'..proton..'"'..' run "'..args.game..'"')
 end

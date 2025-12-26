@@ -1,4 +1,19 @@
 # My coding stuff!
+
+## Links
+- [Installing](#installing)
+- [LUA scripts](#lua)
+- [WARNING](#warning)
+  - [FIXES](#fixes)
+- [LICENSE](#license)
+
+## Installing
+
+```bash
+git clone https://github.com/gigachad228/Ded-Coding.git
+cd Ded-Coding
+```
+
 ## LUA
 I mostly use luajit version of the lua because its faster, but i don't usually use ffi, so its good.
 
@@ -17,7 +32,7 @@ It is by default turned off, the first line is for "n" or "y" values and it defi
 
 The third file is ~/.config/dedlua/env, it has YOUR environment variables, you can add to or remove the default ones the forproton.sh, here are they btw:
 
-```
+```bash
 MANGOHUD=1
 ```
 
@@ -27,10 +42,15 @@ The fourth file is your proton prefix, which is ~/.config/dedlua/pfx, you can ed
 
 Here is the default value for proton:
 
-```
+```bash
 STEAM_COMPAT_DATA_PATH=~/.local/share/dedlua/pfx
 ```
 
-!!WARNING!!
+## WARNING
 
-Every time you execute forproton.sh, it overwrites the "protons", "env" and "default.cfg" with find output and default values!!!
+### FIXES
+if forlua.sh doesn't make files "env" "default.cfg", delete ~/.config/dedlua/env and/or ~/.config/default.cfg
+
+```bash
+rm -f ~/.config/dedlua/env ~/.config/dedlua/default.cfg
+```
