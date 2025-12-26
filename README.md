@@ -32,8 +32,28 @@ It is by default turned off, the first line is for "n" or "y" values and it defi
 
 The third file is ~/.config/dedlua/env, it has YOUR environment variables, you can add to or remove the default ones the forproton.sh, here are they btw:
 
-```bash
+```
 MANGOHUD=1
+STEAM_COMPAT_CLIENT_INSTALL_PATH="~/.local/share/Steam"
+```
+
+Mine looks like this:
+
+```
+MANGOHUD=1
+STEAM_COMPAT_CLIENT_INSTALL_PATH="~/.local/share/Steam"
+QT_QPA_PLATFORM=wayland
+SDL_VIDEODRIVER=wayland
+MOZ_ENABLE_WAYLAND=1
+MESA_LOADER_DRIVER_OVERRIDE=zink
+GALLIUM_DRIVER=zink
+VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/radeon_icd.x86_64.json
+XDG_SESSION_TYPE=wayland
+WLR_RENDERER=vulkan
+__GLX_VENDOR_LIBRARY_NAME=mesa
+GDK_BACKEND=wayland
+CLUTTER_BACKEND=wayland
+gamemoderun
 ```
 
 Each environment variable should be on different lines, althought you can just store them in one line if you want, just be sure to add space in the end and at the start of the line. Also you can add gamemoderun to the last line and it will run it!
