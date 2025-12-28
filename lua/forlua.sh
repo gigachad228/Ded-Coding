@@ -18,8 +18,7 @@ if [[ -e $config/env ]]; then
 else
     echo "making $config/env"
     echo 'MANGOHUD=1
-    STEAM_COMPAT_CLIENT_INSTALL_PATH="~/.local/share/Steam"
-    ' > $config/env
+    STEAM_COMPAT_CLIENT_INSTALL_PATH="~/.local/share/Steam"' > $config/env
 fi
 if [[ -e $config/pfx ]]; then
     echo "you already have $config/pfx, not doing anything"
@@ -30,14 +29,15 @@ fi
 pfxfile="$(cat $config/pfx)"
 echo "copying from ownlibs to $lib"
 cp ./ownlibs/* $lib
-echo "Should we find proton versions in root?"
+echo "Should we find proton versions in $HOME/.steam/root/compatibilitytools.d?"
 PS3="Your choice:"
 options=("yes" "no")
 select choice in "${options[@]}"; do
     case $choice in
 	"yes")
 	    echo "finding protons and putting them into $lib/protons"
-	    find / -executable -name "proton" -fprint $lib/protons
+	    find ~/.steam/root/compatibilitytools.d -executable -name "proton" -fprint $lib/protons
+	    break
 	    ;;
 	"no")
 	    break
@@ -51,9 +51,9 @@ if [[ -e $pfx/version ]]; then
     :
 else
     echo "making a prefix directory at $pfx"
-    mapfile -t options < <(cat $lib/protons)
+    mapfile -t options1 < <(cat $lib/protons)
     PS3="Choose Proton version:"
-    select choice in "${options[@]}"; do
+    select choice in "${options1[@]}"; do
         if [[ -n "$choice" ]]; then
             export $pfxfile
             export STEAM_COMPAT_CLIENT_INSTALL_PATH=~/.local/share/Steam
