@@ -26,7 +26,7 @@ proton.lua has flags "-W" "-B" "-v" "-q" "-X"
 
 "-B" is for "ENABLE_VKBASALT=1"
 
-"-X" is for "PROTON_NO_XIM=1"
+"-X" is for "PROTON_NO_XIM=0"
 
 "-v" is for version of the wrapper
 
