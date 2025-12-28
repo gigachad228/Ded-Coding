@@ -3,6 +3,7 @@
 ## Links
 - [Installing](#installing)
 - [LUA scripts](#lua)
+  - [FLAGS](#flags)
 - [WARNING](#warning)
   - [FIXES](#fixes)
 - [LICENSE](#LICENSE)
@@ -16,6 +17,20 @@ cd Ded-Coding
 
 ## LUA
 I mostly use luajit version of the lua because its faster, but i don't usually use ffi, so its good.
+
+proton.lua has flags "-W" "-B" "-v" "-q" "-X"
+
+### FLAGS
+
+"-W" is for "PROTON_ENABLE_WAYLAND=1"
+
+"-B" is for "ENABLE_VKBASALT=1"
+
+"-X" is for "PROTON_NO_XIM=1"
+
+"-v" is for version of the wrapper
+
+"-q" is for quietness of the proton, -q for silencing proton, -qq for silencing the wrapper and proton
 
 For proton.lua you need to execute forlua.sh file
 

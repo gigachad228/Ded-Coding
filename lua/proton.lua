@@ -1,7 +1,7 @@
 #!/usr/bin/env luajit
 
 -- STEP 1 - DEFINING!!!
-local version = "0.4.0"
+local version = "0.5.0"
 local os = require("os")
 local home = os.getenv("HOME")
 package.path = home.."/.local/share/dedlua/?.lua"
@@ -20,7 +20,7 @@ local function protonfind()
 	local reset = "\27[0m"
 	local protons = io.open(home.."/.local/share/dedlua/protons", "r")
 	if protons == nil then
-		error(color..home..'/.local/share/dedlua/protons NOT FOUND, ABORTING!!! PLEASE LAUNCH "forproton.sh"'..reset)
+		error(color..home..'/.local/share/dedlua/protons NOT FOUND, ABORTING!!! PLEASE LAUNCH "forlua.sh"'..reset)
 	end
 	local amount = 0
 	local protonstwo = {}
@@ -50,9 +50,10 @@ local parser = argparse("DED-proton", "DED-proton")
 
 parser:flag "-W --wayland":description("set PROTON_ENABLE_WAYLAND to 1")
 parser:flag "-B --vkbasalt":description("set ENABLE_VKBASALT to 1")
-parser:flag "-q --quiet":description("don't output anything from proton and end variables")
+parser:flag "-q --quiet":description("don't output anything from proton and end variables"):count("0-2"):target("quietness")
 parser:flag "-x --xim":description("set PROTON_NO_XIM to 0")
 parser:flag "-v --version":description("print the version and exit the wrapper")
+parser:flag "-"
 parser:argument("game", "the game itself")
 
 local args = parser:parse()
@@ -63,15 +64,15 @@ if args.version == true then
 end
 
 if args.wayland == true then
-    table.insert(tab, "PROTON_ENABLE_WAYLAND=1 ")
+    table.insert(tab, "PROTON_ENABLE_WAYLAND=1")
 end
 
 if args.vkbasalt == true then
-    table.insert(tab, "ENABLE_VKBASALT=1 ")
+    table.insert(tab, "ENABLE_VKBASALT=1")
 end
 
 if args.xim == true then
-    table.insert(tab, "PROTON_NO_XIM=0 ")
+    table.insert(tab, "PROTON_NO_XIM=0")
 end
 
 local proton = protonfind()
@@ -87,9 +88,15 @@ for line in fileread:lines() do
 end
 fileread:close()
 -- STEP 3 - LAUNCHING!!!
-if args.quiet == true then
-    os.execute(table.concat(tab, " ").." "..'"'..proton..'"'..' run "'..args.game..'" >/tmp/dedlua.log 2>&1')
+local command = table.concat(tab, [[ \]].."\n").." "..'"'..proton..'"'..' run "'..args.game..'"'
+if args.quietness == 1 then
+    local command = command.." >/tmp/dedlua.log 2>&1"
+    print(command)
+    os.execute(command)
+elseif args.quietness >= 2 then
+    local command = command.." >/tmp/dedlua.log 2>&1"
+    os.execute(command)
 else
-	print(table.concat(tab, "\n"))
-    os.execute(table.concat(tab, " ").." "..'"'..proton..'"'..' run "'..args.game..'"')
+    print(command)
+    os.execute(command)
 end
