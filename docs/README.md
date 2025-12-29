@@ -4,6 +4,8 @@
 - [Installing](#installing)
 - [LUA scripts](#lua)
   - [FLAGS](#flags)
+  - [LIBRARIES](#libraries)
+    - [DOCUMENTATION](#documentation)
 - [WARNING](#warning)
   - [FIXES](#fixes)
 - [LICENSE](#LICENSE)
@@ -84,6 +86,16 @@ Here is the default value for pfx:
 ```bash
 STEAM_COMPAT_DATA_PATH=~/.local/share/dedlua/pfx
 ```
+
+## LIBRARIES
+
+Located inside lua/ownlibs is libraries that this project needs, like argparse and rand, they are installed within this repository for convenience and they all copy themselves inside ~/.local/share/dedlua
+
+### DOCUMENTATION
+
+Here is quick links for docs to my own libraries
+
+- [rand](docs/rand.md)
 
 ## WARNING
 
