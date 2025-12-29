@@ -95,7 +95,7 @@ Located inside lua/ownlibs is libraries that this project needs, like argparse a
 
 Here is quick links for docs to my own libraries
 
-- [rand](docs/rand.md)
+- [rand](rand.md)
 
 ## WARNING
 
