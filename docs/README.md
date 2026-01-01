@@ -8,7 +8,7 @@
     - [DOCUMENTATION](#documentation)
 - [WARNING](#warning)
   - [FIXES](#fixes)
-- [LICENSE](#LICENSE)
+- [LICENSE](/LICENSE)
 
 ## Installing
 
