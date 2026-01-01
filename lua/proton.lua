@@ -1,12 +1,13 @@
 #!/usr/bin/env luajit
 
 -- STEP 1 - DEFINING!!!
-local version = "0.5.0"
+local version = "0.5.1"
 local os = require("os")
 local home = os.getenv("HOME")
 package.path = home.."/.local/share/dedlua/?.lua"
 local fileread = io.open(home.."/.config/dedlua/default.cfg", "r")
 local values = {}
+local safeline=[[ \]].."\n"
 for line in fileread:lines() do
     table.insert(values,line)
 end
@@ -53,7 +54,6 @@ parser:flag "-B --vkbasalt":description("set ENABLE_VKBASALT to 1")
 parser:flag "-q --quiet":description("don't output anything from proton and end variables"):count("0-2"):target("quietness")
 parser:flag "-x --xim":description("set PROTON_NO_XIM to 0")
 parser:flag "-v --version":description("print the version and exit the wrapper")
-parser:flag "-"
 parser:argument("game", "the game itself")
 
 local args = parser:parse()
@@ -77,18 +77,18 @@ end
 
 local proton = protonfind()
 
-fileread = io.open(home.."/.config/dedlua/env", "r") -- INSERTING ENV FROM FILE
+fileread = io.open(home.."/.config/dedlua/env", "r") -- INSERTING ENVIRONMENT VARIABLES FROM FILE
 for line in fileread:lines() do
 	table.insert(tab,line)
 end
 fileread:close()
-fileread = io.open(home.."/.config/dedlua/pfx", "r") -- INSERTING PFX FROM FILE
+fileread = io.open(home.."/.config/dedlua/pfx", "r") -- INSERTING PREFIX FROM FILE
 for line in fileread:lines() do
 	table.insert(tab,line)
 end
 fileread:close()
 -- STEP 3 - LAUNCHING!!!
-local command = table.concat(tab, [[ \]].."\n").." "..'"'..proton..'"'..' run "'..args.game..'"'
+local command = table.concat(tab,safeline)..safeline..'"'..proton..'"'..' run "'..args.game..'"'
 if args.quietness == 1 then
     local command = command.." >/tmp/dedlua.log 2>&1"
     print(command)
