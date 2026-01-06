@@ -1,50 +1,73 @@
 #!/usr/bin/env luajit
 
 -- STEP 1 - DEFINING!!!
+local home = os.getenv("HOME")
+local config = home.."/.config/dedlua/"
+local share = home.."/.local/share/dedlua/"
+package.path = share.."?.lua"
 local version = "0.5.1"
 local os = require("os")
-local home = os.getenv("HOME")
-package.path = home.."/.local/share/dedlua/?.lua"
-local fileread = io.open(home.."/.config/dedlua/default.cfg", "r")
-local values = {}
+local dedlib = require("dedlib")
 local safeline=[[ \]].."\n"
-for line in fileread:lines() do
-    table.insert(values,line)
+local start = {}
+local prestart = {}
+local poststart = {}
+
+function readfile(file,_table)
+   local fileread = io.open(file, "r")
+   if fileread == nil then
+      dedlib.warn(file.." doesn't exist, not doing anything!")
+      return ":"
+   else
+      for line in fileread:lines() do
+	 table.insert(_table,line)
+      end
+   end
+   fileread:close()
 end
-fileread:close()
-local defaultval = values[1]
-local protonval = values[2]
-local tab = {}
+
+readfile(config.."env",start) -- INSERTING ENVIRONMENT VARIABLES FROM FILE
+readfile(config.."pfx",start) -- INSERTING PREFIX FROM FILE
+
+readfile(config.."prestart",prestart) -- INSERTING PRESTART COMMANDS
+readfile(config.."poststart",poststart) -- INSERTING POSTSTART COMMANDS
 
 local function protonfind()
-	local color = "\27[31m"
-	local reset = "\27[0m"
-	local protons = io.open(home.."/.local/share/dedlua/protons", "r")
-	if protons == nil then
-		error(color..home..'/.local/share/dedlua/protons NOT FOUND, ABORTING!!! PLEASE LAUNCH "forlua.sh"'..reset)
-	end
-	local amount = 0
-	local protonstwo = {}
-	for eachproton in protons:lines() do
-		amount=amount+1
-		table.insert(protonstwo,eachproton)
-		print(amount..": "..eachproton)
-	end
-	protons:close()
-	io.write("your choice:")
-	local choice = io.read()
-	if tonumber(choice) > amount then
-		error(color.."NO SUCH CHOICE!!!"..reset)
-	end
-	if defaultval == "y" then
-		io.write(protonval.."\n")
-		return protonstwo[tonumber(protonval)]
-	else
-		local optionchoose = tonumber(choice)
-		return protonstwo[optionchoose]
-	end
+   local values = {}
+   readfile(config.."default.cfg",values) -- READING DEFAULT.CFG FILE
+   local defaultval = values[1]
+   local protonval = values[2]
+   local color = "\27[31m"
+   local reset = "\27[0m"
+   local protons = io.open(home.."/.local/share/dedlua/protons", "r")
+   if protons == nil then
+      error(color..home..'/.local/share/dedlua/protons NOT FOUND, ABORTING!!! PLEASE LAUNCH "forlua.sh"'..reset)
+   end
+   local amount = 0
+   local protonstwo = {}
+   for eachproton in protons:lines() do
+      amount=amount+1
+      table.insert(protonstwo,eachproton)
+      print(amount..": "..eachproton)
+   end
+   protons:close()
+   io.write("your choice:")
+   if defaultval == "y" then
+      io.write(protonval.."\n")
+      local proton = protonstwo[tonumber(protonval)]
+      print("default is set to y, choosing "..proton)
+      return proton
+   else
+      local choice = io.read()
+      if tonumber(choice) > amount then
+	 error(color.."NO SUCH CHOICE!!!"..reset)
+      end
+      local optionchoose = tonumber(choice)
+      return protonstwo[optionchoose]
+   end
 end
 
+local proton = protonfind()
 -- STEP 2 - ARGUMENTING!!!
 local argparse = require("argparse")
 local parser = argparse("DED-proton", "DED-proton")
@@ -59,44 +82,40 @@ parser:argument("game", "the game itself")
 local args = parser:parse()
 
 if args.version == true then
-	print("wrapper's version: "..version)
-	os.exit()
+   print("wrapper's version: "..version)
+   os.exit()
 end
 
 if args.wayland == true then
-    table.insert(tab, "PROTON_ENABLE_WAYLAND=1")
+   table.insert(start, "PROTON_ENABLE_WAYLAND=1")
 end
 
 if args.vkbasalt == true then
-    table.insert(tab, "ENABLE_VKBASALT=1")
+   table.insert(start, "ENABLE_VKBASALT=1")
 end
 
 if args.xim == true then
-    table.insert(tab, "PROTON_NO_XIM=0")
+   table.insert(start, "PROTON_NO_XIM=0")
 end
 
-local proton = protonfind()
-
-fileread = io.open(home.."/.config/dedlua/env", "r") -- INSERTING ENVIRONMENT VARIABLES FROM FILE
-for line in fileread:lines() do
-	table.insert(tab,line)
-end
-fileread:close()
-fileread = io.open(home.."/.config/dedlua/pfx", "r") -- INSERTING PREFIX FROM FILE
-for line in fileread:lines() do
-	table.insert(tab,line)
-end
-fileread:close()
 -- STEP 3 - LAUNCHING!!!
-local command = table.concat(tab,safeline)..safeline..'"'..proton..'"'..' run "'..args.game..'"'
+local prestartcommand = table.concat(prestart,safeline)
+local command = table.concat(start,safeline)..safeline..'"'..proton..'"'..' run "'..args.game..'"'
+local poststartcommand = table.concat(poststart,safeline)
 if args.quietness == 1 then
-    local command = command.." >/tmp/dedlua.log 2>&1"
-    print(command)
-    os.execute(command)
+   local command = command.." >/tmp/dedlua.log 2>&1"
+   print(prestartcommand..";"..command..";"..poststartcommand)
+   os.execute(prestartcommand)
+   os.execute(command)
+   os.execute(poststartcommand)
 elseif args.quietness >= 2 then
-    local command = command.." >/tmp/dedlua.log 2>&1"
-    os.execute(command)
+   local command = command.." >/tmp/dedlua.log 2>&1"
+   os.execute(prestartcommand)
+   os.execute(command)
+   os.execute(poststartcommand)
 else
-    print(command)
-    os.execute(command)
+   print(prestartcommand..";"..command..";"..poststartcommand)
+   os.execute(prestartcommand)
+   os.execute(command)
+   os.execute(poststartcommand)
 end
