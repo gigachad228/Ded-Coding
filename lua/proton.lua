@@ -4,7 +4,7 @@
 local home = os.getenv("HOME")
 local config = home.."/.config/dedlua/"
 local share = home.."/.local/share/dedlua/"
-package.path = share.."?.lua"
+package.path = share.."?.lua;"..home..".luarocks/share/lua/5.1/?.lua"
 local version = "0.5.1"
 local os = require("os")
 local dedlib = require("dedlib")

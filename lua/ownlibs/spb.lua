@@ -7,7 +7,7 @@ function simpleprogressbar.bar(char,len,step,blankchar,start)
    if type(len) ~= "number" then
       len=50
    end
-   if type(step) ~= "number" then
+   if type(step) ~= "number" or step <= 0 then
       step=1
    end
    if blankchar == nil then
@@ -18,8 +18,9 @@ function simpleprogressbar.bar(char,len,step,blankchar,start)
    end
    
    for progress=tonumber(start),len,step do
-      io.write("\r["..string.rep(char,progress)..string.rep(blankchar,len-progress).."]".."\n")
+      io.write("\r["..string.rep(char,progress)..string.rep(blankchar,len-progress).."]")
    end
+   io.write("\n")
 end
 
 return simpleprogressbar

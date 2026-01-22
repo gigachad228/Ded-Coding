@@ -128,7 +128,8 @@ local mouse = [[
                                                    .                     .             .                     .
                                                     .                   .               .                   .
 ]]
-local rand = require("./ownlibs/rand")
+package.path = share.."?.lua;"..home..".luarocks/share/lua/5.1/?.lua"
+local rand = require("rand")
 local socket = require("socket")
 -- разбиение этой МЫШКИ в строки
 local funkymouse = {}
