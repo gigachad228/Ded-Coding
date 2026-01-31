@@ -1,5 +1,5 @@
 # My coding stuff!
-
+MIGRATED TO CODEBERG, THIS REPOSITORY WILL NO LONGER BE MAINTAINED AND WILL BE ARCHIVED! CLICK [HERE](https://github.com/DedJmadeamistake) TO GO TO MY CODEBERG ACCOUNT
 ## Links
 - [Installing](#installing)
 - [LUA scripts](#lua)

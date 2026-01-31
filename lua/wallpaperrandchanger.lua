@@ -1,5 +1,5 @@
 #!/usr/bin/env luajit
-local numofwallpapers=10
+local numofwallpapers=11
 local home = os.getenv("HOME")
 local wallpaper = "~/Pictures/wallpapers/wallpaper"
 package.path = home.."/.local/share/dedlua/?.lua"
